@@ -1,0 +1,13 @@
+﻿bin/
+obj/
+logs/
+.vs/
+*.user
+*.suo
+*.cache
+*.db
+*.db-shm
+*.db-wal
+crash.log
+pybot/
+*.rar
