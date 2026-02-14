@@ -71,8 +71,8 @@ internal static class BotHost
                                    ?? new DatabaseConfiguration();
                     var resolvedConnectionString = ResolveSqliteConnectionString(dbConfig.ConnectionString);
 
-                    // Only Sqlite is referenced by this project today. Preserve existing behavior by falling back
-                    // to Sqlite for any provider value.
+                    
+                    
                     options.UseSqlite(resolvedConnectionString);
                 });
 
@@ -139,15 +139,15 @@ internal static class BotHost
 
     public static async Task StartAsync(IHost host, CancellationToken cancellationToken = default)
     {
-        // ConfigureAwait(false) avoids WinForms sync-context deadlocks when callers block during shutdown.
+        
         await host.StartAsync(cancellationToken).ConfigureAwait(false);
 
         using (var scope = host.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<BotDbContext>();
 
-            // Why: deciding between EnsureCreated vs Migrate should be based on whether migrations exist,
-            // not whether any are currently applied.
+            
+            
             var hasMigrations = db.Database.GetMigrations().Any();
             if (hasMigrations)
             {
@@ -158,8 +158,8 @@ internal static class BotHost
                 await db.Database.EnsureCreatedAsync(cancellationToken).ConfigureAwait(false);
             }
 
-            // The dev box may not have `dotnet-ef` installed, so schema changes may not always ship with
-            // an EF migration. Ensure warn storage exists regardless.
+            
+            
             await EnsureWarnEntriesSchemaAsync(db, cancellationToken).ConfigureAwait(false);
             await EnsureUserMemorySchemaAsync(db, cancellationToken).ConfigureAwait(false);
         }
@@ -177,7 +177,7 @@ internal static class BotHost
 
     private static async Task EnsureWarnEntriesSchemaAsync(BotDbContext db, CancellationToken cancellationToken)
     {
-        // SQLite "IF NOT EXISTS" keeps this idempotent.
+        
         await db.Database.ExecuteSqlRawAsync(
             """
             CREATE TABLE IF NOT EXISTS WarnEntries (

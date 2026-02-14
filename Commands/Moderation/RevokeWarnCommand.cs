@@ -139,7 +139,7 @@ public sealed class RevokeWarnCommand : CommandBase
 
     private sealed class WarnEntryPicker
     {
-        private readonly int? _index; // 1-based
+        private readonly int? _index; 
 
         private WarnEntryPicker(int? index)
         {
@@ -174,7 +174,7 @@ public sealed class RevokeWarnCommand : CommandBase
                 return null;
             }
 
-            // warns are ordered newest-first in service; index 1 == last issued warn
+            
             return warns[idx];
         }
     }

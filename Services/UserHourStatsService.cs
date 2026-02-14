@@ -16,9 +16,9 @@ public sealed class UserHourStatsService : IUserHourStatsService
 
     public async Task IncrementMessageAsync(ulong guildId, ulong userId, DateTime utcNow)
     {
-        // Use the machine's local time to represent "active hours" in a human-friendly way.
+        
         var local = utcNow.ToLocalTime();
-        var hourOfWeek = ((int)local.DayOfWeek * 24) + local.Hour; // 0..167
+        var hourOfWeek = ((int)local.DayOfWeek * 24) + local.Hour; 
 
         var stats = await _db.UserHourStats
             .FirstOrDefaultAsync(s =>
@@ -50,7 +50,7 @@ public sealed class UserHourStatsService : IUserHourStatsService
         }
         catch (DbUpdateException)
         {
-            // Race: create collided with another message in same bucket. Retry as update.
+            
             var existing = await _db.UserHourStats
                 .FirstOrDefaultAsync(s =>
                     s.DiscordGuildId == guildId &&

@@ -70,8 +70,8 @@ public sealed class ImgCommand : CommandBase
             var components = BuildComponents(token, ownerUserId: Context.User.Id, page: 1, query, results);
             try
             {
-                // Components V2 cannot be mixed with content; also avoid converting the legacy
-                // loading message into a V2 message via ModifyAsync.
+                
+                
                 await ReplyAsync(components: components);
                 await loading.ModifyAsync(msg =>
                 {

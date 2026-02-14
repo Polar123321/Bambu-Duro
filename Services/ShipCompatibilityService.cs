@@ -19,7 +19,7 @@ public sealed class ShipCompatibilityService : IShipCompatibilityService
 
     public async Task<ShipCompatibilityResult> CalculateAsync(SocketGuild guild, ulong userId1, ulong userId2, CancellationToken cancellationToken = default)
     {
-        // Fetch totals + recency.
+        
         var totals = await _db.UserGuildStats
             .AsNoTracking()
             .Where(s => s.DiscordGuildId == guild.Id && (s.DiscordUserId == userId1 || s.DiscordUserId == userId2))
@@ -34,7 +34,7 @@ public sealed class ShipCompatibilityService : IShipCompatibilityService
         var u1 = t1?.UpdatedAtUtc;
         var u2 = t2?.UpdatedAtUtc;
 
-        // Channel vectors (top-N per user).
+        
         const int topN = 24;
         var c1 = await _db.UserChannelStats.AsNoTracking()
             .Where(s => s.DiscordGuildId == guild.Id && s.DiscordUserId == userId1 && s.MessageCount > 0)
@@ -56,23 +56,23 @@ public sealed class ShipCompatibilityService : IShipCompatibilityService
         var channelSim = CosineSimilarity(vChan1, vChan2);
         var sharedChannels = vChan1.Keys.Intersect(vChan2.Keys).ToList();
 
-        // Hours vectors (sparse, 0..167).
+        
         var vHour1 = await _hours.GetHourOfWeekCountsAsync(guild.Id, userId1);
         var vHour2 = await _hours.GetHourOfWeekCountsAsync(guild.Id, userId2);
         var hourSim = CosineSimilarity(vHour1, vHour2);
 
         var topSharedHours = TopSharedHours(vHour1, vHour2, k: 3);
 
-        // Activity balance (similar "chatty-ness" = more compatible).
+        
         var balance = (m1 == 0 || m2 == 0) ? 0.35 : (double)Math.Min(m1, m2) / Math.Max(m1, m2);
 
-        // Recency bonus (both active recently).
+        
         var recency = RecencyScore(u1, u2);
 
-        // Stable "spice" so it feels fun, but doesn't dominate.
+        
         var baseSpice = StableSpice(userId1, userId2);
 
-        // Weighted score in [0..1]
+        
         var score =
             (0.34 * channelSim) +
             (0.34 * hourSim) +
@@ -80,7 +80,7 @@ public sealed class ShipCompatibilityService : IShipCompatibilityService
             (0.10 * balance) +
             (0.04 * baseSpice);
 
-        // If there is little data, fall back to spice + balance so it still works.
+        
         var dataPoints = Math.Min(1.0, (Math.Log10(m1 + 10) + Math.Log10(m2 + 10)) / 6.0);
         score = (score * dataPoints) + ((0.55 * balance + 0.45 * baseSpice) * (1.0 - dataPoints));
 
@@ -156,7 +156,7 @@ public sealed class ShipCompatibilityService : IShipCompatibilityService
         var d2 = (now - u2.Value).TotalDays;
         var avg = (d1 + d2) / 2.0;
 
-        // 0 days -> ~1.0, 7 days -> ~0.6, 30 days -> ~0.2
+        
         var s = 1.0 / (1.0 + Math.Pow(avg / 7.0, 1.2));
         return Math.Clamp(s, 0.0, 1.0);
     }
@@ -177,7 +177,7 @@ public sealed class ShipCompatibilityService : IShipCompatibilityService
             return new List<int>();
         }
 
-        // Score by product; this favors hours where both are active.
+        
         var list = new List<(int Hour, long Score)>();
         foreach (var kv in a)
         {
@@ -251,7 +251,7 @@ public sealed class ShipCompatibilityService : IShipCompatibilityService
 
     private static string SummaryFor(int percent, double chan, double hour)
     {
-        // Keep it short and readable.
+        
         var chanTxt = chan >= 0.6 ? "muitos canais em comum" : chan >= 0.3 ? "alguns canais em comum" : "poucos canais em comum";
         var hourTxt = hour >= 0.6 ? "horarios bem alinhados" : hour >= 0.3 ? "horarios mais ou menos" : "horarios desencontrados";
         return $"{percent}%: {chanTxt} e {hourTxt}.";

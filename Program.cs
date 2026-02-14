@@ -8,7 +8,7 @@ internal static class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        // Garantir algum feedback quando rodar como app Windows (antes era WinExe, sem console).
+        
         Console.Title = "ConsoleApp4";
         Console.WriteLine("Iniciando (net8.0-windows)...");
 
@@ -88,7 +88,7 @@ internal static class Program
         }
         catch (OperationCanceledException)
         {
-            // Ctrl+C
+            
         }
 
         await BotHost.StopAsync(host);
@@ -108,7 +108,7 @@ internal static class Program
         }
         catch
         {
-            // Swallow logging failures to avoid secondary crashes.
+            
         }
     }
 }

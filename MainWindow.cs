@@ -9,10 +9,10 @@ using System.Threading;
 
 namespace ConsoleApp4;
 
-/// <summary>
-/// Premium dark-mode control center for the bot.
-/// Why: keep a cohesive design system and reduce UI churn by using a nav rail + cards + batched logging.
-/// </summary>
+
+
+
+
 public sealed class MainWindow : Form
 {
     private readonly string[] _args;
@@ -21,20 +21,20 @@ public sealed class MainWindow : Form
     private IHost? _host;
     private bool _running;
 
-    // Top-level layout
+    
     private NavRail _nav = null!;
     private Panel _pageHost = null!;
     private Panel _pageDashboard = null!;
     private Panel _pageGeneral = null!;
     private Panel _pageEconomy = null!;
 
-    // Dashboard controls
+    
     private RichTextBox _logBox = null!;
     private Label _statusPill = null!;
     private AnimatedButton _btnStart = null!;
     private AnimatedButton _btnStop = null!;
 
-    // General fields
+    
     private TextField _fToken = null!;
     private TextField _fPrefix = null!;
     private TextField _fOwnerId = null!;
@@ -42,7 +42,7 @@ public sealed class MainWindow : Form
     private TextField _fEmbedColor = null!;
     private AnimatedButton _btnSave = null!;
 
-    // Economy fields
+    
     private NumberField _nDaily = null!;
     private NumberField _nWorkMin = null!;
     private NumberField _nWorkMax = null!;
@@ -118,8 +118,8 @@ public sealed class MainWindow : Form
 
     private void ShowPage(int index)
     {
-        // Critical: only bring the selected page to front.
-        // Bringing all pages (including invisible ones) to front causes blank frames and heavy relayout/repaint.
+        
+        
         _pageHost.SuspendLayout();
         try
         {
@@ -156,11 +156,11 @@ public sealed class MainWindow : Form
         };
         grid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 62));
         grid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 38));
-        // Give the header enough height so stacked CTAs never clip (DPI scaling + default margins).
+        
         grid.RowStyles.Add(new RowStyle(SizeType.Absolute, 150));
         grid.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
 
-        // Header card (left)
+        
         var header = new GlassCard
         {
             Dock = DockStyle.Fill,
@@ -209,7 +209,7 @@ public sealed class MainWindow : Form
         titlePanel.Controls.Add(subtitle);
         titlePanel.Controls.Add(title);
 
-        // Actions (right)
+        
         var actions = new FlowLayoutPanel
         {
             Dock = DockStyle.Fill,
@@ -221,7 +221,7 @@ public sealed class MainWindow : Form
 
         _btnStart = new AnimatedButton { Text = "Iniciar Bot", IconGlyph = FluentGlyphs.Play, Accent = Theme.Colors.Accent2, Accent2 = Theme.Colors.Accent };
         _btnStop = new AnimatedButton { Text = "Parar Bot", IconGlyph = FluentGlyphs.Stop, IsDanger = true, Enabled = false };
-        // Tighter CTA stack so it always fits inside the header card.
+        
         _btnStart.Height = 38;
         _btnStop.Height = 38;
         _btnStart.Margin = new Padding(0, 0, 0, 10);
@@ -236,7 +236,7 @@ public sealed class MainWindow : Form
         hGrid.Controls.Add(actions, 1, 0);
         header.Controls.Add(hGrid);
 
-        // Log card (full width bottom-left)
+        
         var logCard = new GlassCard
         {
             Dock = DockStyle.Fill,
@@ -276,7 +276,7 @@ public sealed class MainWindow : Form
         logLayout.Controls.Add(_logBox, 0, 1);
         logCard.Controls.Add(logLayout);
 
-        // Right column: quick settings snapshot
+        
         var quick = new GlassCard
         {
             Dock = DockStyle.Fill,
@@ -358,7 +358,7 @@ public sealed class MainWindow : Form
         };
         grid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60));
         grid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40));
-        // Header has 2 lines + card padding; keep it tall enough to avoid clipping.
+        
         grid.RowStyles.Add(new RowStyle(SizeType.Absolute, 96));
         grid.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
 
@@ -569,7 +569,7 @@ public sealed class MainWindow : Form
             return;
         }
 
-        // Basic validation feedback (UI only).
+        
         _fOwnerId.Invalid = !string.IsNullOrWhiteSpace(_fOwnerId.TextBox.Text) && !ulong.TryParse(_fOwnerId.TextBox.Text, out _);
 
         var bot = GetOrCreateObject(root, "Bot");
@@ -677,7 +677,7 @@ public sealed class MainWindow : Form
     {
         if (_running && _host != null)
         {
-            // BotHost uses ConfigureAwait(false); blocking here won't deadlock.
+            
             BotHost.StopAsync(_host).GetAwaiter().GetResult();
             _host.Dispose();
         }

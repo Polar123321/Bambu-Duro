@@ -139,7 +139,7 @@ public sealed class WarnCommand : CommandBase
 
             try
             {
-                // Avoid relying on gateway member cache; fetch from REST when needed.
+                
                 var rest = await Context.Client.Rest.GetGuildUserAsync(guild.Id, userId);
                 return rest;
             }
@@ -149,7 +149,7 @@ public sealed class WarnCommand : CommandBase
             }
         }
 
-        // Best-effort fallback for plain text inputs (only works for cached members).
+        
         var normalized = input.Trim();
         var byNick = guild.Users.FirstOrDefault(u =>
             string.Equals(u.Nickname, normalized, StringComparison.OrdinalIgnoreCase));

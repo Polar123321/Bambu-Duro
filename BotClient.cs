@@ -42,7 +42,7 @@ public sealed class BotClient
             throw new InvalidOperationException("Bot token is missing. Configure Bot:Token in appsettings.json or environment variables.");
         }
 
-        // Why: the UI can start/stop multiple times in a single process; ensure we don't attach duplicate handlers.
+        
         _client.Log -= OnLogAsync;
         _client.Ready -= OnReadyAsync;
         _client.Log += OnLogAsync;
@@ -89,7 +89,7 @@ public sealed class BotClient
 
     private Task OnLogAsync(LogMessage message)
     {
-        // Discord.Net sometimes logs "Command: null" with no exception; keep noise down.
+        
         if (message.Message != null &&
             message.Message.StartsWith("Command: null", StringComparison.OrdinalIgnoreCase) &&
             message.Exception == null)

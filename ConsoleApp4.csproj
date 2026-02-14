@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net8.0;net8.0-windows</TargetFrameworks>
@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
-    <!-- Exe => abre console ao executar pelo Explorer/VS; WinExe não abre console -->
+    
     <OutputType>Exe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-  <!-- Exclude WinForms UI from the Linux/console target -->
+  
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
     <Compile Remove="MainForm.cs" />
     <Compile Remove="MainWindow.cs" />
@@ -55,5 +55,6 @@
   </ItemGroup>
 
 </Project>
+
 
 

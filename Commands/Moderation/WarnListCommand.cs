@@ -10,7 +10,7 @@ namespace ConsoleApp4.Commands.Moderation;
 
 public sealed class WarnListCommand : CommandBase
 {
-    private const int PageSize = 25; // Select menu limit
+    private const int PageSize = 25; 
     private readonly IWarnService _warns;
 
     public WarnListCommand(
@@ -106,7 +106,7 @@ public sealed class WarnListCommand : CommandBase
             return string.IsNullOrWhiteSpace(user.Nickname) ? user.Username : user.Nickname;
         }
 
-        // Fallback: keep it deterministic and under label limits.
+        
         return $"User {userId}";
     }
 }

@@ -6,7 +6,7 @@ public sealed class AutoNoticeConfiguration
 {
     public ulong RoleId { get; init; }
 
-    // Optional: also trigger for specific user IDs (in addition to RoleId).
+    
     public List<ulong> UserIds { get; init; } = new();
 
     [Range(1, 3600)]

@@ -347,7 +347,7 @@ public sealed class StaffApplicationInteractions : InteractionModuleBase<SocketI
         }
         catch
         {
-            // ignore DM failures
+            
         }
     }
 

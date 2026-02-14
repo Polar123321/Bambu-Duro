@@ -74,7 +74,7 @@ internal abstract class FieldBase : UserControl
         }
         catch
         {
-            // Derived controls might not have initialized their inner widget yet.
+            
             return null;
         }
     }
@@ -84,13 +84,13 @@ internal abstract class FieldBase : UserControl
         var g = e.Graphics;
         GraphicsUtil.SetHighQuality(g);
 
-        // Label
+        
         using var labelFont = Theme.Fonts.Ui(9f, FontStyle.Bold);
         var labelRect = new Rectangle(0, 0, Width, 18);
         TextRenderer.DrawText(g, Label, labelFont, labelRect, Theme.Colors.Muted,
             TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis | TextFormatFlags.NoPadding);
 
-        // Field container
+        
         var boxRect = new Rectangle(0, 24, Width, 38);
         using var path = GraphicsUtil.RoundedRect(boxRect, Theme.Radii.R14);
 
@@ -113,7 +113,7 @@ internal abstract class FieldBase : UserControl
             g.DrawPath(pen, path);
         }
 
-        // Hint
+        
         if (!string.IsNullOrWhiteSpace(Hint))
         {
             using var hintFont = Theme.Fonts.Ui(8.5f);
@@ -163,7 +163,7 @@ internal sealed class TextField : FieldBase
         _toggle = new Button
         {
             FlatStyle = FlatStyle.Flat,
-            Text = "\uE8F4", // View (eye)
+            Text = "\uE8F4", 
             Font = Theme.Fonts.Icon(12f),
             ForeColor = Theme.Colors.Muted,
             BackColor = Color.Transparent,
@@ -236,7 +236,7 @@ internal sealed class NumberField : FieldBase
             InterceptArrowKeys = true
         };
 
-        // Hide the default WinForms spinner buttons (they don't theme well and show up white).
+        
         if (_num.Controls.Count > 0)
         {
             _num.Controls[0].Visible = false;
@@ -281,7 +281,7 @@ internal sealed class NumberField : FieldBase
             boxRect.Width - 24 - rightPad,
             22);
 
-        // Custom stepper, aligned inside the field container.
+        
         var x = boxRect.Right - stepW - 8;
         _up.Bounds = new Rectangle(x, boxRect.Top + 6, stepW, 13);
         _down.Bounds = new Rectangle(x, boxRect.Top + 19, stepW, 13);

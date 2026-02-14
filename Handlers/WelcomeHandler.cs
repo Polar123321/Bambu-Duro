@@ -154,8 +154,8 @@ public sealed class WelcomeHandler
 
     private EmbedBuilder BuildWelcomeEmbed(string title, string description, string? imageUrl, GuildConfig config)
     {
-        // Standardize welcome messages on the same "rich" embed theme used elsewhere
-        // (author/footer/timestamp/thumbnail/banner), while keeping welcome-specific color + optional image.
+        
+        
         var embed = _embeds.CreateMajestic(title, description, null);
 
         if (!string.IsNullOrWhiteSpace(imageUrl))

@@ -72,7 +72,7 @@ internal sealed class StepperGlyph : Control
             return;
         }
 
-        // Fill (opaque) to avoid repaint artifacts in scrolling containers.
+        
         var fill = _down
             ? Color.FromArgb(255, Theme.Colors.Surface0)
             : _hover

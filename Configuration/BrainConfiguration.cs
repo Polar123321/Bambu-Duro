@@ -25,13 +25,13 @@ public sealed class BrainConfiguration
     [Range(4, 200)]
     public int LongJsonContextMessages { get; init; } = 24;
 
-    /// <summary>
-    /// Directory for long-term JSON memories. Relative paths are stored under LocalApplicationData/ConsoleApp4.
-    /// </summary>
+    
+    
+    
     public string LongJsonDirectory { get; init; } = "long-memory";
 
-    /// <summary>
-    /// If empty, tracks every user. Otherwise, tracks only these Discord user IDs.
-    /// </summary>
+    
+    
+    
     public List<ulong> TrackedUserIds { get; init; } = new();
 }

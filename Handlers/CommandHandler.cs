@@ -82,14 +82,14 @@ public sealed class CommandHandler
             var commandToken = ExtractCommandToken(message.Content, argPos);
             _logger.LogInformation("Command debug: raw='{Raw}' token='{Token}' argPos={ArgPos} user={UserId}", message.Content, commandToken, argPos, message.Author.Id);
 
-            // IMPORTANT: The CommandService is configured with RunMode.Async (it can execute after ExecuteAsync returns),
-            // so we must keep the scope alive until CommandExecuted fires.
+            
+            
             var scope = _services.CreateScope();
             var scopedServices = scope.ServiceProvider;
 
             if (string.IsNullOrWhiteSpace(commandToken) || !IsKnownCommand(commandToken))
             {
-                // Fallback: try to execute anyway in case of hidden chars or parsing quirks.
+                
                 var fallback = await _commands.ExecuteAsync(context, argPos, scopedServices);
                 _logger.LogInformation("Command exec (fallback): success={Success} error={Error} reason='{Reason}' user={UserId}", fallback.IsSuccess, fallback.Error, fallback.ErrorReason, message.Author.Id);
                 if (fallback.IsSuccess)
@@ -178,7 +178,7 @@ public sealed class CommandHandler
     {
         _commandScopes[messageId] = scope;
 
-        // Defensive cleanup in case CommandExecuted isn't raised for some reason.
+        
         _ = Task.Run(async () =>
         {
             await Task.Delay(TimeSpan.FromMinutes(10)).ConfigureAwait(false);
@@ -191,7 +191,7 @@ public sealed class CommandHandler
 
     private async Task OnCommandExecutedAsync(Optional<CommandInfo> command, ICommandContext context, IResult result)
     {
-        // If the command ran under a per-message scope, dispose it now (RunMode.Async safe).
+        
         if (context.Message != null && _commandScopes.TryRemove(context.Message.Id, out var scope))
         {
             scope.Dispose();
@@ -218,7 +218,7 @@ public sealed class CommandHandler
 
     private Task OnLogAsync(LogMessage message)
     {
-        // Discord.Net sometimes logs "Command: null" with no exception; keep noise down.
+        
         if (message.Message != null &&
             message.Message.StartsWith("Command: null", StringComparison.OrdinalIgnoreCase) &&
             message.Exception == null)
@@ -388,7 +388,7 @@ public sealed class CommandHandler
             return;
         }
 
-        // Bucket groups rate limiting per guild and config flavor; TryConsume is still per-author.
+        
         var bucket = $"autonotice:{guildChannel.Guild.Id}:{cfg.RoleId}:{(cfg.UserIds != null && cfg.UserIds.Count > 0 ? 1 : 0)}";
         if (!_rateLimitService.TryConsume(guildUser.Id, bucket, TimeSpan.FromSeconds(cfg.CooldownSeconds)))
         {
@@ -428,7 +428,7 @@ public sealed class CommandHandler
                 return;
             }
 
-            // Prevent spam when users keep pinging the bot.
+            
             if (!_rateLimitService.TryConsume(message.Author.Id, "groq-mention", TimeSpan.FromSeconds(3)))
             {
                 return;

@@ -51,7 +51,7 @@ internal static class AllWarnListLivePanel
         }
         catch
         {
-            // Se a mensagem/canal nao existir mais, removemos do cache.
+            
             Panels.TryRemove(guildId, out _);
         }
     }

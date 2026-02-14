@@ -11,7 +11,7 @@ namespace ConsoleApp4.Commands.Moderation;
 
 public sealed class SendDmCommand : CommandBase
 {
-    private const long MaxAttachmentBytes = 8L * 1024 * 1024; // Conservative default for DMs.
+    private const long MaxAttachmentBytes = 8L * 1024 * 1024; 
     private readonly IHttpClientFactory _httpClientFactory;
 
     public SendDmCommand(
@@ -80,7 +80,7 @@ public sealed class SendDmCommand : CommandBase
             {
                 foreach (var a in attachments)
                 {
-                    // Prevent huge downloads and reduce failure noise.
+                    
                     if (a.Size > MaxAttachmentBytes)
                     {
                         await ReplyAsync($"Anexo muito grande para enviar por DM: `{a.Filename}` ({a.Size / (1024 * 1024)}MB).");
@@ -98,7 +98,7 @@ public sealed class SendDmCommand : CommandBase
                     using var resp = await client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead);
                     resp.EnsureSuccessStatusCode();
 
-                    // Copy to memory to ensure Discord.Net can re-read the stream if needed.
+                    
                     await using var src = await resp.Content.ReadAsStreamAsync();
                     var ms = new MemoryStream(capacity: (int)Math.Min(a.Size, int.MaxValue));
                     await src.CopyToAsync(ms);

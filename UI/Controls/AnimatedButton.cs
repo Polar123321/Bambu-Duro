@@ -5,7 +5,7 @@ namespace ConsoleApp4.UI.Controls;
 internal sealed class AnimatedButton : Control
 {
     private readonly System.Windows.Forms.Timer _timer;
-    private float _t; // 0..1 hover progress
+    private float _t; 
     private float _target;
     private bool _pressed;
 
@@ -34,7 +34,7 @@ internal sealed class AnimatedButton : Control
         _timer = new System.Windows.Forms.Timer { Interval = 15 };
         _timer.Tick += (_, _) =>
         {
-            // Critically damped-ish interpolation.
+            
             var speed = 0.18f;
             _t += (_target - _t) * speed;
             if (Math.Abs(_target - _t) < 0.01f)
@@ -124,7 +124,7 @@ internal sealed class AnimatedButton : Control
 
         if (!Enabled)
         {
-            // Keep consistent visuals for disabled state.
+            
             using var pathDisabled = GraphicsUtil.RoundedRect(rect, CornerRadius);
             using var fillDisabled = new LinearGradientBrush(rect,
                 Color.FromArgb(255, Theme.Colors.Surface0),
@@ -157,14 +157,14 @@ internal sealed class AnimatedButton : Control
         var a0 = IsDanger ? Theme.Colors.Danger : Accent;
         var a1 = IsDanger ? Color.FromArgb(255, 255, 120, 120) : Accent2;
 
-        // Hover lift + press depression.
+        
         var lift = (int)Math.Round(_t * 2f);
         var press = _pressed ? 1 : 0;
         rect.Offset(0, -lift + press);
 
         using var path = GraphicsUtil.RoundedRect(rect, CornerRadius);
 
-        // Shadow
+        
         var shadow = rect;
         shadow.Offset(0, 4);
         using (var shadowPath = GraphicsUtil.RoundedRect(shadow, CornerRadius))
@@ -173,9 +173,9 @@ internal sealed class AnimatedButton : Control
             g.FillPath(shadowBrush, shadowPath);
         }
 
-        // Fill gradient
-        // Why: keep the default state dark and premium; avoid translucent whites that "wash out" and show
-        // background seams through the button.
+        
+        
+        
         var baseTop = Theme.Colors.Surface1;
         var baseBottom = Theme.Colors.Surface2;
         using (var fill = new LinearGradientBrush(rect,
@@ -187,7 +187,7 @@ internal sealed class AnimatedButton : Control
             g.FillPath(fill, path);
         }
 
-        // Stroke gradient
+        
         using (var stroke = new LinearGradientBrush(rect,
                    Color.FromArgb(200, Blend(Theme.Colors.Stroke1, a0, _t * 0.7f)),
                    Color.FromArgb(80, Theme.Colors.Stroke0),
@@ -197,7 +197,7 @@ internal sealed class AnimatedButton : Control
             g.DrawPath(pen, path);
         }
 
-        // Focus ring
+        
         if (Focused)
         {
             var ring = rect;
@@ -207,7 +207,7 @@ internal sealed class AnimatedButton : Control
             g.DrawPath(ringPen, ringPath);
         }
 
-        // Content
+        
         var padX = Theme.Spacing.S12;
         var iconSize = 16;
 

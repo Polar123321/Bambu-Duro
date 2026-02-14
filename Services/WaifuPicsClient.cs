@@ -51,7 +51,7 @@ public sealed class WaifuPicsClient
                 }
             }
 
-            // Fallback if API keeps repeating.
+            
             var fallback = await _http.GetFromJsonAsync<WaifuPicsResponse>(url);
             if (!string.IsNullOrWhiteSpace(fallback?.Url))
             {

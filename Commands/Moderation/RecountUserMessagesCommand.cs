@@ -217,7 +217,7 @@ public sealed class RecountUserMessagesCommand : CommandBase
         }
         catch
         {
-            // ignore edit failures (rate limit or missing perms)
+            
         }
     }
 
@@ -229,7 +229,7 @@ public sealed class RecountUserMessagesCommand : CommandBase
         }
         catch
         {
-            // ignore progress errors
+            
         }
     }
 

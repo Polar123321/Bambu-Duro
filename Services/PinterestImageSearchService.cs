@@ -335,7 +335,7 @@ public sealed class PinterestImageSearchService
             }
             catch
             {
-                // Ignore malformed item payload.
+                
             }
         }
 
@@ -527,7 +527,7 @@ public sealed class PinterestImageSearchService
 
     private static string? ExtractTitle(string text)
     {
-        // r.jina.ai responses usually start with "Title: ..."
+        
         var marker = "Title:";
         var idx = text.IndexOf(marker, StringComparison.OrdinalIgnoreCase);
         if (idx < 0)

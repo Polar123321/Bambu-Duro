@@ -54,7 +54,7 @@ public sealed class MuteCommand : CommandBase
             return;
         }
 
-        // Discord timeout has a hard cap (28 days). Fail fast so we don't create an action that can never succeed.
+        
         const int MaxTimeoutMinutes = 28 * 24 * 60;
         if (minutes > MaxTimeoutMinutes)
         {
@@ -158,7 +158,7 @@ public sealed class MuteCommand : CommandBase
 
             try
             {
-                // Avoid relying on gateway member cache; fetch from REST when needed.
+                
                 var rest = await Context.Client.Rest.GetGuildUserAsync(guild.Id, userId);
                 return rest;
             }
@@ -168,7 +168,7 @@ public sealed class MuteCommand : CommandBase
             }
         }
 
-        // Best-effort fallback for plain text inputs (only works for cached members).
+        
         var normalized = input.Trim();
         var byNick = guild.Users.FirstOrDefault(u =>
             string.Equals(u.Nickname, normalized, StringComparison.OrdinalIgnoreCase));
@@ -209,15 +209,15 @@ public sealed class MuteCommand : CommandBase
 
         var s = input.Trim().ToLowerInvariant();
 
-        // Plain number = minutes
+        
         if (int.TryParse(s, out var m))
         {
             minutes = m;
             return true;
         }
 
-        // Support compact forms like: 10m, 1h, 2d, 1h30m, 2d4h, etc.
-        // Units: m=minutes, h=hours, d=days
+        
+        
         var total = 0L;
         var i = 0;
         while (i < s.Length)
@@ -240,7 +240,7 @@ public sealed class MuteCommand : CommandBase
 
             if (i >= s.Length)
             {
-                return false; // missing unit
+                return false; 
             }
 
             var unit = s[i];

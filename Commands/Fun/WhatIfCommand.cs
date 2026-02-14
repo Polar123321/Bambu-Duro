@@ -32,12 +32,12 @@ public sealed class WhatIfCommand : CommandBase
     {
         await TrackUserAsync();
 
-        // Acknowledge quickly for long calls.
+        
         await Context.Channel.TriggerTypingAsync();
 
         var answer = await _groq.WhatIfAsync(scenario, Context.User.Username);
 
-        // Discord embed description limit is 4096; keep it safe.
+        
         if (answer.Length > 3800)
         {
             answer = answer[..3800] + "\n\n(Resposta cortada)";

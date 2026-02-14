@@ -6,23 +6,23 @@ internal static class Theme
 {
     internal static class Colors
     {
-        // Backgrounds
+        
         internal static readonly Color Bg0 = ColorTranslator.FromHtml("#0b0d12");
         internal static readonly Color Bg1 = ColorTranslator.FromHtml("#101421");
         internal static readonly Color Surface0 = ColorTranslator.FromHtml("#121621");
         internal static readonly Color Surface1 = ColorTranslator.FromHtml("#171c28");
         internal static readonly Color Surface2 = ColorTranslator.FromHtml("#1d2433");
 
-        // Strokes / separators
+        
         internal static readonly Color Stroke0 = ColorTranslator.FromHtml("#263045");
         internal static readonly Color Stroke1 = ColorTranslator.FromHtml("#2f3a52");
 
-        // Text
+        
         internal static readonly Color Text = ColorTranslator.FromHtml("#f0f3f8");
         internal static readonly Color Muted = ColorTranslator.FromHtml("#a7b0c0");
         internal static readonly Color Faint = ColorTranslator.FromHtml("#76819a");
 
-        // Accents
+        
         internal static readonly Color Accent = ColorTranslator.FromHtml("#2ef2c5");
         internal static readonly Color Accent2 = ColorTranslator.FromHtml("#4ea1ff");
         internal static readonly Color Danger = ColorTranslator.FromHtml("#ff5b6e");
@@ -51,7 +51,7 @@ internal static class Theme
     {
         internal static Font Ui(float size, FontStyle style = FontStyle.Regular)
         {
-            // "Segoe UI Variable" exists on modern Windows; fall back safely.
+            
             var family = TryFontFamily("Segoe UI Variable Text") ??
                          TryFontFamily("Segoe UI Variable") ??
                          TryFontFamily("Segoe UI") ??

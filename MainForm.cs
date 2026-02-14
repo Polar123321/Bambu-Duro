@@ -16,7 +16,7 @@ public sealed class MainForm : Form
     private IHost? _host;
     private bool _running;
 
-    // Theme
+    
     private Color _colorBg;
     private Color _colorSurface;
     private Color _colorPanel;
@@ -26,21 +26,21 @@ public sealed class MainForm : Form
     private Color _colorMuted;
     private Color _colorDanger;
 
-    // UI Controls
+    
     private RichTextBox _logBox = null!;
     private Button _btnStart = null!;
     private Button _btnStop = null!;
     private Button _btnSave = null!;
     private Label _lblStatus = null!;
 
-    // Settings - General
+    
     private TextBox _txtToken = null!;
     private TextBox _txtPrefix = null!;
     private TextBox _txtOwnerId = null!;
     private TextBox _txtStatusMsg = null!;
     private TextBox _txtEmbedColor = null!;
 
-    // Settings - Economy
+    
     private NumericUpDown _numDaily = null!;
     private NumericUpDown _numWorkMin = null!;
     private NumericUpDown _numWorkMax = null!;
@@ -103,7 +103,7 @@ public sealed class MainForm : Form
             e.Graphics.DrawString(text, Font, fg, textX, textY);
         };
 
-        // --- Tab 1: Dashboard ---
+        
         var tabDashboard = new TabPage("Dashboard")
         {
             BackColor = _colorBg
@@ -286,7 +286,7 @@ public sealed class MainForm : Form
 
         tabDashboard.Controls.Add(dashboardLayout);
 
-        // --- Tab 2: Configuracao Geral ---
+        
         var tabGeneral = new TabPage("Geral")
         {
             BackColor = _colorBg
@@ -319,7 +319,7 @@ public sealed class MainForm : Form
         generalCard.Controls.Add(generalLayout);
         tabGeneral.Controls.Add(generalCard);
 
-        // --- Tab 3: Economia ---
+        
         var tabEconomy = new TabPage("Economia")
         {
             BackColor = _colorBg
@@ -352,7 +352,7 @@ public sealed class MainForm : Form
         economyCard.Controls.Add(economyPanel);
         tabEconomy.Controls.Add(economyCard);
 
-        // --- Main Layout ---
+        
         tabControl.TabPages.Add(tabDashboard);
         tabControl.TabPages.Add(tabGeneral);
         tabControl.TabPages.Add(tabEconomy);
@@ -509,14 +509,14 @@ public sealed class MainForm : Form
                 return;
             }
 
-            // Bot Settings
+            
             _txtToken.Text = root["Bot"]?["Token"]?.ToString() ?? "";
             _txtPrefix.Text = root["Bot"]?["Prefix"]?.ToString() ?? "";
             _txtOwnerId.Text = root["Bot"]?["OwnerUserId"]?.ToString() ?? "";
             _txtStatusMsg.Text = root["Bot"]?["Status"]?.ToString() ?? "";
             _txtEmbedColor.Text = root["Bot"]?["EmbedColor"]?.ToString() ?? "";
 
-            // Economy Settings
+            
             var eco = root["Economy"];
             if (eco != null)
             {
@@ -559,7 +559,7 @@ public sealed class MainForm : Form
                 return;
             }
 
-            // Update Bot
+            
             var bot = GetOrCreateObject(root, "Bot");
             bot["Token"] = _txtToken.Text;
             bot["Prefix"] = _txtPrefix.Text;
@@ -570,7 +570,7 @@ public sealed class MainForm : Form
             bot["Status"] = _txtStatusMsg.Text;
             bot["EmbedColor"] = _txtEmbedColor.Text;
 
-            // Update Economy
+            
             var eco = GetOrCreateObject(root, "Economy");
             eco["DailyReward"] = (int)_numDaily.Value;
             eco["WorkMinReward"] = (int)_numWorkMin.Value;
@@ -629,7 +629,7 @@ public sealed class MainForm : Form
             }
             catch
             {
-                // Best-effort cleanup only.
+                
             }
             _host = null;
             Log($"ERRO FATAL: {ex.Message}");
@@ -806,7 +806,7 @@ public sealed class MainForm : Form
                 return;
             }
 
-            // Why: avoid an invoke per character / per log line when the bot is busy.
+            
             if (Interlocked.Exchange(ref _flushScheduled, 1) == 1)
             {
                 return;
@@ -848,7 +848,7 @@ public sealed class MainForm : Form
             _box.AppendText(sb.ToString());
             _box.ScrollToCaret();
 
-            // If new writes arrived while we were flushing, schedule another pass.
+            
             if (!_pending.IsEmpty)
             {
                 ScheduleFlush();

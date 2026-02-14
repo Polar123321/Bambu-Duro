@@ -161,13 +161,13 @@ public sealed class MarriageCommand : CommandBase
             }
             catch
             {
-                // Ignora erro de busca por REST e segue para fallback global.
+                
             }
 
             return Context.Client.GetUser(id);
         }
 
-        // Fallback para texto sem mencao: tenta apelido e username.
+        
         var users = Context.Guild.Users;
         var exact = users.FirstOrDefault(u =>
             string.Equals(u.Nickname, lookupInput, StringComparison.OrdinalIgnoreCase) ||

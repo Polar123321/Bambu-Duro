@@ -30,7 +30,7 @@ internal sealed class NavRail : Control
             ControlStyles.OptimizedDoubleBuffer |
             ControlStyles.ResizeRedraw, true);
 
-        // WinForms Control doesn't support true transparency by default; we paint our own background anyway.
+        
         BackColor = Theme.Colors.Surface0;
         ForeColor = Theme.Colors.Text;
         Font = Theme.Fonts.Ui(10.5f, FontStyle.Bold);
@@ -63,7 +63,7 @@ internal sealed class NavRail : Control
 
     private int HitTest(Point p)
     {
-        var y = Theme.Spacing.S20 + 52; // brand block
+        var y = Theme.Spacing.S20 + 52; 
         var itemH = 44;
         for (var i = 0; i < _items.Count; i++)
         {
@@ -84,13 +84,13 @@ internal sealed class NavRail : Control
             g.FillRectangle(bg, rect);
         }
 
-        // Subtle right separator glow.
+        
         using (var pen = new Pen(Color.FromArgb(130, Theme.Colors.Stroke0), 1f))
         {
             g.DrawLine(pen, rect.Right - 1, rect.Top, rect.Right - 1, rect.Bottom);
         }
 
-        // Brand
+        
         var brandRect = new Rectangle(Theme.Spacing.S12, Theme.Spacing.S16, Width - Theme.Spacing.S24, 52);
         using (var titleFont = Theme.Fonts.Ui(14.5f, FontStyle.Bold))
         using (var subtitleFont = Theme.Fonts.Ui(9.25f))
@@ -101,7 +101,7 @@ internal sealed class NavRail : Control
                 Theme.Colors.Muted, TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.NoPadding);
         }
 
-        // Items
+        
         var y = Theme.Spacing.S20 + 52;
         var itemH = 44;
         using var iconFont = Theme.Fonts.Icon(14f);
@@ -126,7 +126,7 @@ internal sealed class NavRail : Control
                 using var glowPen = new Pen(Color.FromArgb(200, Theme.Colors.Accent2), 1.5f);
                 g.DrawPath(glowPen, path);
 
-                // Left indicator
+                
                 var ind = new Rectangle(r.Left - 2, r.Top + 10, 4, r.Height - 20);
                 using var indPath = GraphicsUtil.RoundedRect(ind, 4);
                 using var indBrush = new SolidBrush(Theme.Colors.Accent2);

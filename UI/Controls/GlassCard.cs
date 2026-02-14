@@ -5,7 +5,7 @@ namespace ConsoleApp4.UI.Controls;
 internal sealed class GlassCard : Panel
 {
     public int CornerRadius { get; set; } = Theme.Radii.R18;
-    // Opaque fills avoid "ghosting" where underlying controls show through the card.
+    
     public Color FillTop { get; set; } = Theme.Colors.Surface0;
     public Color FillBottom { get; set; } = Theme.Colors.Surface1;
     public Color StrokeTop { get; set; } = Color.FromArgb(200, Theme.Colors.Stroke1);
@@ -22,7 +22,7 @@ internal sealed class GlassCard : Panel
 
     protected override void OnPaintBackground(PaintEventArgs e)
     {
-        // Avoid default background painting to prevent flicker; we paint everything in OnPaint.
+        
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -36,7 +36,7 @@ internal sealed class GlassCard : Panel
             return;
         }
 
-        // Soft "ambient shadow" behind the card (very subtle, not harsh black).
+        
         var shadowRect = rect;
         shadowRect.Inflate(-2, -2);
         shadowRect.Offset(0, 3);
@@ -56,7 +56,7 @@ internal sealed class GlassCard : Panel
             g.FillPath(fill, path);
         }
 
-        // "Glass" highlight line.
+        
         using (var highlight = new LinearGradientBrush(cardRect,
                    Color.FromArgb(160, Theme.Colors.Text),
                    Color.FromArgb(0, Theme.Colors.Text),

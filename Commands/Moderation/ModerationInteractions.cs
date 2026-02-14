@@ -44,10 +44,10 @@ public sealed class ModerationInteractions : InteractionModuleBase<SocketInterac
             return;
         }
 
-        // Acknowledge within 3 seconds to avoid "Esta interacao falhou".
+        
         await DeferAsync(ephemeral: true);
 
-        // Only some actions require the original channel.
+        
         ITextChannel? channel = null;
         if (action.Type is ModerationActionType.Clear or ModerationActionType.TestMessage)
         {
@@ -239,13 +239,13 @@ public sealed class ModerationInteractions : InteractionModuleBase<SocketInterac
         }
         catch
         {
-            // ignore DM failures
+            
         }
     }
 
     private async Task<IGuildUser?> ResolveGuildUserAsync(SocketGuild guild, ulong userId)
     {
-        // Gateway member cache can miss members; use REST as fallback so moderation actions work reliably.
+        
         var cached = guild.GetUser(userId);
         if (cached != null)
         {

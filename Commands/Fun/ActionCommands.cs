@@ -338,7 +338,7 @@ public sealed class ActionCommands : CommandBase
         var message = Context.Message as SocketUserMessage;
         var raw = message?.Content ?? input ?? string.Empty;
 
-        // 1) Mentions in content order
+        
         foreach (Match match in Regex.Matches(raw, "<@!?(\\d+)>"))
         {
             if (ulong.TryParse(match.Groups[1].Value, out var id))
@@ -351,7 +351,7 @@ public sealed class ActionCommands : CommandBase
             }
         }
 
-        // 2) Real mentions fallback
+        
         if (message != null && candidates.Count < 2)
         {
             foreach (var u in message.MentionedUsers)
@@ -363,7 +363,7 @@ public sealed class ActionCommands : CommandBase
             }
         }
 
-        // 3) IDs in text (raw)
+        
         foreach (Match match in Regex.Matches(raw, "\\b\\d{17,20}\\b"))
         {
             if (ulong.TryParse(match.Value, out var id))
@@ -376,7 +376,7 @@ public sealed class ActionCommands : CommandBase
             }
         }
 
-        // 4) @name fallback
+        
         if (candidates.Count < 2 && !string.IsNullOrWhiteSpace(raw))
         {
             var name = raw.Trim().TrimStart('@');
@@ -387,7 +387,7 @@ public sealed class ActionCommands : CommandBase
             }
         }
 
-        // 5) Reply fallback
+        
         if (candidates.Count < 2 && message?.Reference?.MessageId.IsSpecified == true)
         {
             var refId = message.Reference.MessageId.Value;

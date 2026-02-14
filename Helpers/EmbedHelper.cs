@@ -121,16 +121,16 @@ public sealed class EmbedHelper
 
     private static void BuildEmbedContainer(ContainerBuilder c, EmbedBuilder embed)
     {
-        // Render an "embed-like" card using Components V2 primitives (Container/Section/Separator/TextDisplay/MediaGallery).
-        // The whole content goes into a Container so it doesn't just look like plain chat text.
+        
+        
 
-        // Accent color is the closest analog to embed color.
+        
         c.WithAccentColor(embed.Color);
 
         var headerText = BuildHeaderText(embed);
         var accessoryUrl = FirstNonEmpty(embed.ThumbnailUrl, embed.Author?.IconUrl);
 
-        // Section accessory currently supports ThumbnailBuilder (and ButtonBuilder).
+        
         if (!string.IsNullOrWhiteSpace(accessoryUrl) && headerText.Length <= TextDisplayBuilder.MaxContentLength)
         {
             var thumb = new ThumbnailBuilder()
@@ -177,7 +177,7 @@ public sealed class EmbedHelper
             AddTextDisplays(c, footer);
         }
 
-        // Best-effort: show the embed main image via MediaGallery (not the thumbnail, since that may be used as Section accessory).
+        
         if (!string.IsNullOrWhiteSpace(embed.ImageUrl))
         {
             c.WithMediaGallery(new[] { embed.ImageUrl });
@@ -342,7 +342,7 @@ public sealed class EmbedHelper
             var remainingLen = text.Length - idx;
             var take = Math.Min(maxLen, remainingLen);
 
-            // Try to cut on a line boundary for nicer output.
+            
             var end = idx + take;
             var cut = text.LastIndexOf('\n', end - 1, take);
             if (cut <= idx)
